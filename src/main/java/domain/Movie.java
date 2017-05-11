@@ -6,13 +6,13 @@ public class Movie {
 	private int id;
 	private String title;
 	private String description;
-	private int releaseYear;
+	private int releaseYear = 0;
 	private String genre;
 	private String director;
 	private String country;
 	private List<Comment> comments;
 	private List<Rate> rates;
-	private float rating;
+	private float rating = 0;
 	private List<Actor> actors;
 	
 	public int getId() {
@@ -69,15 +69,16 @@ public class Movie {
 	public void setRates(List<Rate> rates) {
 		this.rates = rates;
 	}
-	public float getRating() {
-		for (Rate rate: rates)
-			rating += rate.getRate();
-		return rating / rates.size();
-	}
 	public List<Actor> getActors() {
 		return actors;
 	}
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
+	}
+	public float getRating() {
+		return rating;
+	}
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 }

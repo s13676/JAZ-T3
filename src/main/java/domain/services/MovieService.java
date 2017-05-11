@@ -26,11 +26,17 @@ public class MovieService {
 	public void update(Movie movie) {
 		for (Movie m: db) {
 			if (m.getId() == movie.getId()) {
-				m.setCountry(movie.getCountry());
-				m.setDescription(movie.getDescription());
-				m.setDirector(movie.getDirector());
-				m.setGenre(movie.getGenre());
-				m.setReleaseYear(movie.getReleaseYear());
+				if (movie.getCountry() != null)
+					m.setCountry(movie.getCountry());
+				if (movie.getDescription() != null)
+					m.setDescription(movie.getDescription());
+				if (movie.getDirector() != null)
+					m.setDirector(movie.getDirector());
+				if (movie.getGenre() != null)
+					m.setGenre(movie.getGenre());
+				if (movie.getReleaseYear() != 0)
+					m.setReleaseYear(movie.getReleaseYear());
+				if (movie.getTitle() != null)
 				m.setTitle(movie.getTitle());
 			}
 		}

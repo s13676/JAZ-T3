@@ -22,6 +22,7 @@ import domain.services.CommentService;
 import domain.services.MovieService;
 import domain.services.RateService;
 
+@Path("/v0.1")
 public class Resources {
 	private MovieService movieDB = new MovieService();
 	private ActorService actorDB = new ActorService();
@@ -114,6 +115,8 @@ public class Resources {
 		Movie m = movieDB.get(id);
 		if (m == null)
 			return Response.status(404).build();
+		if (m.getRates() == null)
+			m.setRates(new ArrayList<Rate>());
 		if (RateService.isCorrect(r))
 			RateService.add(m, r);
 		else
