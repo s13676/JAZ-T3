@@ -25,12 +25,10 @@ public class ActorService {
 		return null;
 	}
 	public void assignToMovie(Movie m, Actor actor) {
-		for (Actor a: m.getActors()) {
-			if (actor.getId() == a.getId()) {
-				m.getActors().add(a);
-				a.getMovies().add(m);
+		for (Movie movie: actor.getMovies()) {
+			if (movie.getId() == m.getId())
 				return;
-			}
 		}
+		actor.getMovies().add(m);
 	}
 }

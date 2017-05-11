@@ -13,7 +13,6 @@ public class Movie {
 	private List<Comment> comments;
 	private List<Rate> rates;
 	private float rating = 0;
-	private List<Actor> actors;
 	
 	public int getId() {
 		return id;
@@ -68,12 +67,6 @@ public class Movie {
 	}
 	public void setRates(List<Rate> rates) {
 		this.rates = rates;
-	}
-	public List<Actor> getActors() {
-		return actors;
-	}
-	public void setActors(List<Actor> actors) {
-		this.actors = actors;
 	}
 	public float getRating() {
 		return rating;

@@ -125,14 +125,14 @@ public class Resources {
 	}
 	
 	@GET
-	@Path("/actors")
+	@Path("/actor")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Actor> getAllActors() {
 		return actorDB.getAll();
 	}
 	
 	@POST
-	@Path("/actors")
+	@Path("/actor")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addActor(Actor a) {
 		actorDB.add(a);
@@ -140,26 +140,36 @@ public class Resources {
 	}
 	
 	@GET
-	@Path("/movie/{movieId}/actors/")
+	@Path("/movie/{movieId}/actors")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Actor> getActors(@PathParam("movieId") int movieId) {
 		Movie m = movieDB.get(movieId);
 		if (m == null)
 			return null;
-		if (m.getActors() == null)
-			m.setActors(new ArrayList<Actor>());
-		return m.getActors();
+		List<Actor> actors = new ArrayList<Actor>();
+		for (Actor a: actorDB.getAll()) {
+			if (a.getMovies() == null)
+				a.setMovies(new ArrayList<Movie>());
+			for (Movie movie: a.getMovies()) {
+				if (movie.getId() == m.getId())
+					actors.add(a);
+			}
+		}
+		return actors;
 	}
 	
 	@POST
 	@Path("/movie/{movieId}/actors")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response assignActor(@PathParam("movieId") int movieId, int actorId) {
+	public Response assignActor(@PathParam("movieId") int movieId, Actor actor) {
 		Movie m = movieDB.get(movieId);
-		Actor a = actorDB.get(actorId);
+		if (actor.getId() == 0)
+			return Response.status(404).build();
+		Actor a = actorDB.get(actor.getId());
 		if (m == null || a == null)
 			return Response.status(404).build();
-		
+		if (a.getMovies() == null)
+			a.setMovies(new ArrayList<Movie>());
 		actorDB.assignToMovie(m, a);
 		return Response.ok().build();
 	}
